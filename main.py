@@ -10,6 +10,10 @@ from optimizer import (
 
 app = FastAPI()
 
+@app.get("/")
+def read_root():
+    return {"message": "Hello World"}
+
 @app.post("/optimize-portfolio")
 async def optimize_portfolio(
     file: UploadFile = File(...),
@@ -19,6 +23,7 @@ async def optimize_portfolio(
 ):
     try:
         df = pd.read_csv(file.file)
+        df = df.select_dtypes(include=["number"])  # Drop date and non-numeric columns
     except Exception:
         return JSONResponse(content={"error": "Failed to read CSV file"}, status_code=400)
 
