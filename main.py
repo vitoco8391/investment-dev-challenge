@@ -19,6 +19,7 @@ async def optimize_portfolio(
 ):
     try:
         df = pd.read_csv(file.file)
+        df = df.select_dtypes(include=[np.number])  # Drop non-numeric columns like dates
     except Exception:
         return JSONResponse(content={"error": "Failed to read CSV file"}, status_code=400)
 
