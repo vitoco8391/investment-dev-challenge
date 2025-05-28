@@ -24,6 +24,7 @@ async def optimize_portfolio(
     try:
         df = pd.read_csv(file.file)
         df = df.select_dtypes(include=["number"])  # Drop date and non-numeric columns
+        df = df.fillna(0)  # assume its a holiday when you dont have the daily return, so 0
     except Exception:
         return JSONResponse(content={"error": "Failed to read CSV file"}, status_code=400)
 
