@@ -19,7 +19,7 @@ async def optimize_portfolio(
 ):
 try:
     df = pd.read_csv(file.file)
-    df = df.select_dtypes(include=[np.number])  # Keep only numeric columns
+    df = df.select_dtypes(include=[np.number])  # Drop non-numeric columns like dates
 
     if df.empty or df.shape[1] < 2:
         raise ValueError("Not enough numeric columns after cleaning.")
