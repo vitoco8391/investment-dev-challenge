@@ -10,10 +10,6 @@ from optimizer import (
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"message": "Hello World"}
-
 @app.post("/optimize-portfolio")
 async def optimize_portfolio(
     file: UploadFile = File(...),
