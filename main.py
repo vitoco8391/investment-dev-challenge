@@ -17,15 +17,10 @@ async def optimize_portfolio(
     max_weight: float = Form(...),
     method: str = Form("markowitz")
 ):
-try:
-    df = pd.read_csv(file.file)
-    df = df.select_dtypes(include=[np.number])  # Drop non-numeric columns like dates
-
-    if df.empty or df.shape[1] < 2:
-        raise ValueError("Not enough numeric columns after cleaning.")
-
-except Exception as e:
-    return JSONResponse(content={"error": f"Failed to process CSV: {str(e)}"}, status_code=400)
+    try:
+        df = pd.read_csv(file.file)
+    except Exception:
+        return JSONResponse(content={"error": "Failed to read CSV file"}, status_code=400)
 
     try:
         if method == "markowitz":
